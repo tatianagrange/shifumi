@@ -1,21 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-export default function App() {
+import GameScreen from './src/screens/GameScreen';
+import LogScoreScreen from './src/screens/LogScoreScreen';
+
+import { Provider as ScoreProvider } from './src/context/ScoreContext'
+
+const Tab = createBottomTabNavigator();
+
+function TabNavigator() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer theme={DarkTheme}>
+      <Tab.Navigator>
+        <Tab.Screen name="Game" component={GameScreen} />
+        <Tab.Screen name="LogScore" component={LogScoreScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default function App() {
+  return (
+      <ScoreProvider>
+        <TabNavigator />
+      </ScoreProvider>
+  );
+}
